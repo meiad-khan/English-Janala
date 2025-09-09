@@ -147,3 +147,22 @@ for(let lesson of lessons){
 }
 }
 loadLessons();
+
+document.getElementById('btn-search').addEventListener('click',()=>{
+  removeActive();
+  const input = document.getElementById('input-search');
+  const searchValue = input.value.trim().toLowerCase();
+  // console.log(searchValue);
+  fetch('https://openapi.programming-hero.com/api/words/all')
+  .then(res => res.json())
+  .then(data => {
+    // console.log(data.data);
+    const allWords = data.data;
+    // allWords.forEach(word=> console.log(word.word))
+    const filterWords = allWords.filter((word) =>
+        word.word.toLowerCase().includes(searchValue)
+      );
+    displayWords(filterWords);
+  })
+  input.value='';
+})
